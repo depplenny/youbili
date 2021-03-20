@@ -4,23 +4,24 @@ This is a python app which can download youtube videos and subtitles, then trans
 
 Author: depplenny@gmail.com
 
-Install:
+## Install:
 
 $ git clone https://github.com/depplenny/youbili
 
-Requirements:
+## Requirements:
 
 1. This app uses microsoft azure translator, create a translator resource and get the authentication key at 
    https://docs.microsoft.com/en-us/azure/cognitive-services/translator/translator-how-to-signup
-   Your key would look like 43aab2df00084eda9cf6dfac4f6b0fec.
-   Save it in a file named key.txt inside youbili folder.
+   
+   Your key would look like 43aab2df00084eda9cf6dfac4f6b0fec. Save it in a file named key.txt inside youbili folder.
 
 2. Install FFmpeg
 
 3. $ python3 -m pip install --upgrade pip
+
    $ python3 -m pip install translate youtube_dl
 
-Usage:
+## Usage:
 
 Download youtube videos and subtitles, then translate subtitles into chinese
 
