@@ -10,7 +10,7 @@ with open('key.txt') as file:
 
 for line in lines:
   if not '#' in line:
-    key = line
+    key = line.strip();
 
 translator = Translator(provider='microsoft', to_lang='zh', secret_access_key=key)
 
