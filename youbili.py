@@ -16,7 +16,7 @@ translator = Translator(provider='microsoft', to_lang='zh', secret_access_key=ke
 
 
 def vid_down(url):
-  os.system("youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' --write-thumbnail --write-auto-sub {}".format(url))
+  os.system("youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' --write-thumbnail --write-sub --write-auto-sub {}".format(url))
 
 
 def vtt2srt(file_src_path):
@@ -132,9 +132,10 @@ def en2cn(file_src_path):
   os.remove(file_src_path)
 
 
+
 def burn_in_sub(inp_vid, inp_sub):
   out_vid = inp_vid.replace('.mp4', '.sub.mp4')
-  os.system("""ffmpeg -i '{}' -filter_complex "subtitles='{}':force_style='BackColour=&H80000000,BorderStyle=4,Fontsize=14'" '{}'""".format(inp_vid, inp_sub, out_vid))  
+  os.system("""ffmpeg -i '{}' -filter_complex "subtitles='{}':force_style='BackColour=&H80000000,BorderStyle=4,Fontsize=14'" '{}'""".format(inp_vid, inp_sub, out_vid)) 
   os.remove(inp_vid)
   os.remove(inp_sub)
 
@@ -159,23 +160,23 @@ if __name__ == '__main__':
       print('en2cn starts:')
       en2cn(path)
   else:
+    # Get rid of the single quote
     sub_paths = glob.glob('*.中英字幕.srt')
     for path in sub_paths:
+      basepath_old = path.replace('.中英字幕.srt', '')
+      basepath_new = basepath_old.replace("'", '')
+      os.rename(basepath_old+'.中英字幕.srt', basepath_new+'.中英字幕.srt')
+      os.rename(basepath_old+'.mp4', basepath_new+'.mp4')
+      if os.path.exists(basepath_old+'.jpg'):
+        os.rename(basepath_old+'.jpg', basepath_new+'.jpg')
+      if os.path.exists(basepath_old+'.webp'):
+        os.rename(basepath_old+'.webp', basepath_new+'.webp')
+
+    sub_paths = glob.glob('*.中英字幕.srt')
+    for sub_path in sub_paths:
       print('burn_in_sub starts:')
-
-      sub_path = path
-      img_path = path.replace('.中英字幕.srt','.jpg')
-      img_path2 = path.replace('.中英字幕.srt','.webp')
-      mp4_path = path.replace('.中英字幕.srt','.mp4')
-
-      os.rename(sub_path, sub_path.replace("'", ''))
-      if os.path.exists(img_path):
-        os.rename(img_path, img_path.replace("'", ''))
-      if os.path.exists(img_path2):
-        os.rename(img_path2, img_path2.replace("'", ''))
-      os.rename(mp4_path, mp4_path.replace("'", ''))
-      
-      burn_in_sub(mp4_path.replace("'", ''), sub_path.replace("'", ''))
+      mp4_path = sub_path.replace('.中英字幕.srt','.mp4')
+      burn_in_sub(mp4_path, sub_path)
 
 
   os.chdir('../')
