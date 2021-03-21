@@ -33,6 +33,7 @@ $ python3 youbili.py
 
 ## FFmpeg:
 Cut the video from HH:MM:SS.xxx=00:00:30.0 to HH:MM:SS.xxx=00:00:30.0
+
 $ ffmpeg -ss 00:00:30.0 -i input.mp4 -c copy -t 00:00:30.0 output.mp4
 
 
