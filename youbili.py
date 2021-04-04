@@ -2,17 +2,22 @@ import os
 import re
 import sys
 import glob
-from translate import Translator
+
+from utils import Translator
+
+
+
+
 
 
 with open('key.txt') as file: 
-    lines = file.readlines()
+  lines = file.readlines()
 
 for line in lines:
   if not '#' in line:
     key = line.strip();
 
-translator = Translator(provider='microsoft', to_lang='zh', secret_access_key=key)
+translator = Translator(key=key)
 
 
 def vid_down(url):
@@ -78,7 +83,6 @@ def en2cn(file_src_path):
   timestamp = [ i for i, x in enumerate(content_src) if ' --> ' in x]
 
   # true if it's youtube's auto generated subtitle
-
   is_auto = 'align:start' in content_src[timestamp[0]]
   j=1
 

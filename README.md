@@ -19,7 +19,7 @@ $ git clone https://github.com/depplenny/youbili
 
 3. $ python3 -m pip install --upgrade pip
 
-   $ python3 -m pip install translate youtube_dl
+   $ python3 -m pip install requests uuid youtube_dl
 
 ## Usage:
 
